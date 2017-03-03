@@ -5,7 +5,7 @@ const mysql = require('mysql2/promise');
 const LOCK_ID = '***LOCK***';
 const TABLE_DEFINITION = `
 	CREATE TABLE IF NOT EXISTS ?? (
-		name varchar(256) not null primary key,
+		name varchar(255) not null primary key,
 		status varchar(32),
 		date datetime not null
 	) Engine=InnoDB;
