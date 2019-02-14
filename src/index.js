@@ -3,6 +3,13 @@ const {resolve} = require('path');
 const mysql = require('mysql2/promise');
 
 const LOCK_ID = '***LOCK***';
+
+const CHECK_TABLE = `
+  SELECT COUNT(1) FROM ??;
+`;
+
+
+
 const TABLE_DEFINITION = `
 	CREATE TABLE IF NOT EXISTS ?? (
 		name varchar(255) not null primary key,
@@ -33,12 +40,18 @@ exports.init = function (initOptions, dir) {
 
 	const connectionPromise = mysql.createConnection(options);
 
-	let prepare = () => connectionPromise
-		.then(connection => connection.query(TABLE_DEFINITION, [table])
-			.then(() => {
-				prepare = () => Promise.resolve();
-			})
-		);
+  let prepare = () => connectionPromise
+      .then(connection => connection.query(CHECK_TABLE, [table])
+	    .then( () => {
+	      prepare = () => Promise.resolve();
+	    })
+	    .catch( (e) => {
+	      connection.query(TABLE_DEFINITION, [table])
+		.then( () => {
+		  prepare = () => Promise.resolve();
+		});
+	    })
+	   );
 
 	const getConnection = () => prepare().then(() => connectionPromise);
 
