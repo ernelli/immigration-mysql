@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Features
 
-* Replaced CREATE IF NOT EXISTS with a query to the migration table, if it fails, runt the conditional create statement.
+* Replaced CREATE IF NOT EXISTS with a query to the migration table, if it fails, run the conditional create statement.
 It prevents deadlocks when multiple instances of applications runs db-migrate simultaneously.
 
 <a name="1.0.1"></a>
