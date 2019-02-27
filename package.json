@@ -1,6 +1,6 @@
 {
   "name": "immigration-mysql",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "MySQL adapter for Immigration",
   "main": "src/index.js",
   "directories": {
